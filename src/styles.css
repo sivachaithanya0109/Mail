@@ -182,11 +182,11 @@
   --mail-search: oklch(0.952 0.021 254.6);
   --mail-compose: oklch(0.914 0.057 235.2);
   --mail-compose-hover: oklch(0.887 0.065 235.4);
-  --mobile-shell: oklch(0.958 0.014 118);
-  --mobile-card: oklch(0.988 0.009 116);
-  --mobile-panel: oklch(0.935 0.011 117);
-  --mobile-control: oklch(0.426 0.054 140);
-  --mobile-control-foreground: oklch(0.985 0.006 116);
+  --mobile-shell: oklch(0.978 0.007 255.5);
+  --mobile-card: oklch(1 0 0);
+  --mobile-panel: oklch(0.952 0.021 254.6);
+  --mobile-control: oklch(0.914 0.057 235.2);
+  --mobile-control-foreground: oklch(0.2462 0.0866 259.66);
 }
 
 
@@ -221,7 +221,7 @@
   .label-item { @apply flex h-8 items-center gap-4 text-foreground; }
   .label-dot { @apply h-2.5 w-2.5 rounded-sm; }
   .label-dot-work { @apply bg-primary; } .label-dot-personal { @apply bg-mail-success; } .label-dot-travel { @apply bg-mail-warning; }
-  .mail-main { @apply mb-4 min-w-0 flex-1 overflow-hidden rounded-2xl bg-mail-surface; }
+  .mail-main { @apply mb-4 min-w-0 flex-1 overflow-hidden rounded-tl-3xl rounded-bl-3xl bg-mail-surface shadow-[inset_1px_1px_0_color-mix(in_oklab,var(--border)_55%,transparent)]; }
   .mail-toolbar { @apply flex h-12 items-center justify-between px-3; }
   .toolbar-group { @apply flex min-w-0 items-center gap-0; }
   .select-control { @apply flex h-10 items-center gap-1 px-2; }
@@ -321,7 +321,7 @@
 @media (max-width: 900px) {
   .mail-header { @apply gap-2; } .mail-brand-area { @apply w-auto; } .mail-brand-area > span { @apply hidden; }
   .mail-sidebar { @apply absolute bottom-0 left-0 top-16 z-30 bg-background shadow-compose; } .mail-sidebar-collapsed { @apply -translate-x-full; }
-  .mail-main { @apply rounded-none; } .email-row { @apply grid-cols-[90px_150px_minmax(0,1fr)_60px]; }
+  .mail-main { @apply rounded-none shadow-none; } .email-row { @apply grid-cols-[90px_150px_minmax(0,1fr)_60px]; }
   .app-rail { @apply hidden; }
 }
 
@@ -332,9 +332,7 @@
   .mail-layout { @apply pb-20 pt-24; }
   .mail-brand-area { @apply static z-10 w-12 justify-start pl-0; } .mail-brand-area > span, .mail-logo-mark { @apply hidden; }
   .mail-brand-area .mail-icon-btn { @apply h-10 w-10; }
-  .mail-search { @apply col-start-2 h-16 w-full max-w-none rounded-full bg-mobile-card px-5 shadow-sm; } .mail-search > .mail-icon-btn:first-child, .mail-search > .mail-icon-btn:last-child { @apply hidden; } .mail-search input { @apply px-0 text-center text-[18px]; }
-  .mail-search input::placeholder { color: transparent; }
-  .mail-search input::before { content: "Search in emails"; }
+  .mail-search { @apply col-start-2 h-14 w-full max-w-none rounded-full bg-mobile-card px-4 shadow-sm; } .mail-search > .mail-icon-btn:first-child, .mail-search > .mail-icon-btn:last-child { @apply hidden; } .mail-search input { @apply px-0 text-left text-base; }
   .mail-header-actions { @apply static col-start-3 z-10 flex w-12 justify-end p-0; } .mail-header-actions > * { @apply hidden; } .mail-header-actions > .mail-avatar-button { @apply flex h-10 w-10 border-2 border-primary; }
   .mail-sidebar { @apply top-24; }
   .mail-main { @apply mb-0 rounded-none bg-mobile-shell; }
