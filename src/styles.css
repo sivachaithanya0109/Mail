@@ -201,6 +201,8 @@
   .mail-header-actions { @apply ml-auto flex items-center gap-0 pr-1; }
   .mail-icon-btn { @apply h-10 w-10 shrink-0 rounded-full text-muted-foreground hover:bg-accent hover:text-foreground; }
   .mail-icon-btn svg { @apply h-5 w-5 stroke-[1.8]; }
+  .unread-mail-icon { @apply relative inline-flex; }
+  .unread-mail-icon > i { @apply absolute -right-0.5 -top-0.5 h-1.5 w-1.5 rounded-full border border-background bg-current; }
   .mail-avatar-button { @apply ml-1 h-9 w-9 rounded-full border-2 border-mail-surface bg-primary text-xs font-bold text-primary-foreground shadow-sm hover:bg-primary/90; }
   .mail-layout { @apply flex h-dvh gap-0 pt-16; }
   .mail-sidebar { @apply w-64 shrink-0 overflow-hidden pb-4 pr-3 transition-[width]; }
@@ -364,22 +366,25 @@
   .row-quick-actions { @apply hidden; }
   .pagination span { @apply hidden; } .list-status { @apply hidden; }
   .mobile-bottom-nav { @apply fixed inset-x-0 bottom-0 z-30 flex h-20 items-center justify-around border-t border-border bg-mobile-shell; }
-  .mobile-bottom-nav > button { @apply relative h-14 w-28 rounded-2xl; }
+  .mobile-bottom-nav > button { @apply relative h-14 w-24 rounded-2xl; }
   .mobile-bottom-nav svg { @apply h-7 w-7; }
   .mobile-bottom-nav .mobile-nav-active span { @apply rounded-full bg-mail-nav-active px-7 py-2; }
   .mobile-bottom-nav b { @apply absolute right-5 top-0 rounded-full bg-destructive px-1.5 py-0.5 text-[10px] text-destructive-foreground; }
   .mobile-reader-open > .mail-header { @apply hidden; }
   .mobile-reader-open .mail-layout { @apply pb-20 pt-0; }
   .reader { @apply bg-mobile-shell pb-20; }
-  .reader-toolbar { @apply h-20 bg-mobile-shell px-3; }
+  .reader-toolbar { @apply h-16 bg-mobile-shell px-3; }
   .reader-toolbar .pagination { @apply hidden; }
-  .reader-toolbar .toolbar-group:first-child { @apply w-full justify-between; }
-  .reader-toolbar .toolbar-divider, .reader-toolbar .toolbar-group:first-child .mail-icon-btn:nth-of-type(2), .reader-toolbar .toolbar-group:first-child .mail-icon-btn:nth-of-type(5), .reader-toolbar .toolbar-group:first-child .mail-icon-btn:nth-of-type(6) { @apply hidden; }
-  .message { @apply px-4 py-2; } .subject-line { @apply mb-5 grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-1 pl-0; } .subject-line h1 { @apply text-[24px] leading-8; } .subject-line .important-pill { @apply col-auto row-auto w-fit bg-mail-nav-active text-accent-foreground; } .subject-line .mail-icon-btn:first-of-type { @apply flex; } .subject-line .mail-icon-btn:not(:first-of-type) { @apply hidden; }
-  .sender-card { @apply rounded-2xl bg-mobile-card px-5 py-5; }
+  .reader-toolbar .toolbar-group:first-child { @apply w-full items-center justify-start gap-2; }
+  .reader-toolbar .mail-icon-btn svg { @apply h-6 w-6; }
+  .reader-toolbar [aria-label="Back to messages"] { margin-right: auto; }
+  .reader-toolbar .toolbar-divider, .reader-toolbar [aria-label="Report spam"], .reader-toolbar [aria-label="Snooze"], .reader-toolbar [aria-label="Add to tasks"], .reader-toolbar [aria-label="Move to"], .reader-toolbar [aria-label="Labels"] { display: none; }
+  .message { @apply px-2 py-1; } .subject-line { @apply mb-4 grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-1 pl-0; } .subject-line h1 { @apply text-[24px] leading-8; } .subject-line .important-pill { @apply col-auto row-auto w-fit bg-mail-nav-active text-accent-foreground; } .subject-line .mail-icon-btn:first-of-type { @apply flex; } .subject-line .mail-icon-btn:not(:first-of-type) { @apply hidden; }
+  .sender-card { @apply rounded-2xl bg-mobile-card px-4 py-5; }
   .sender-block { @apply grid grid-cols-[40px_minmax(0,1fr)_auto] items-start gap-x-3; } .sender-meta { @apply min-w-0; }
   .sender-avatar { @apply h-12 w-12 text-sm; }
   .sender-name-line { @apply min-w-0; } .sender-name-line > b { @apply max-w-full truncate text-base; } .sender-name-line > span, .sender-name-line > svg { @apply hidden; }
+  .sender-name-line > .mobile-message-time { @apply inline-flex shrink-0 text-xs font-normal text-muted-foreground; }
   .desktop-sender-details { @apply hidden; } .mobile-sender-details { @apply flex h-7 gap-1 p-0 text-sm font-normal; } .mobile-sender-details svg { @apply h-4 w-4 transition-transform; } .mobile-sender-details .details-open { @apply rotate-180; }
   .unsubscribe { @apply hidden; }
   .message-time { @apply col-start-3 row-start-1 ml-0; } .message-time > span, .message-time .mail-icon-btn:first-of-type { @apply hidden; } .message-time .mail-icon-btn { @apply h-9 w-9; }
@@ -390,7 +395,7 @@
   .mobile-encryption > svg { @apply mt-1 h-5 w-5 text-muted-foreground; } .mobile-encryption > span { @apply flex flex-col text-foreground; }
   .mobile-encryption button { @apply h-7 justify-start p-0 text-sm text-mobile-control; }
   .message-body { @apply px-0 py-7 text-left text-sm leading-6; } .message-body p { @apply mb-5; } .attachments, .reply-actions { @apply ml-0; }
-  .reply-actions { @apply fixed inset-x-4 bottom-22 z-20 flex gap-3 bg-mobile-shell pb-2 pt-2; } .reply-actions > button:not(.mail-icon-btn) { @apply h-14 flex-1 rounded-full border-0 bg-mobile-control text-base text-mobile-control-foreground; } .reply-actions .mail-icon-btn { @apply h-14 w-14 border border-border bg-mobile-card; }
+  .reply-actions { @apply fixed inset-x-4 bottom-22 z-20 flex items-center gap-3 bg-mobile-shell pb-2 pt-2; } .reply-actions > button:not(.mail-icon-btn) { @apply h-14 flex-1 rounded-full border-0 bg-mobile-control text-base text-mobile-control-foreground; } .reply-actions .mail-icon-btn { @apply h-14 w-14 rounded-full border-0 bg-mobile-control text-mobile-control-foreground; }
   .compose-window { @apply inset-0 h-dvh w-full rounded-none; } .compose-window + * { @apply hidden; }
   .sender-popover { @apply w-[calc(100vw-1.5rem)] max-w-none rounded-md bg-popover p-4 text-popover-foreground; animation: none !important; opacity: 1 !important; transform: none !important; }
   .popover-grid { @apply grid-cols-[58px_minmax(0,1fr)] gap-x-2 gap-y-2 text-xs; } .popover-grid > span { @apply text-left; } .security-line { @apply items-start; }
