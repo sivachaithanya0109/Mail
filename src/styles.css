@@ -201,8 +201,6 @@
   .mail-header-actions { @apply ml-auto flex items-center gap-0 pr-1; }
   .mail-icon-btn { @apply h-10 w-10 shrink-0 rounded-full text-muted-foreground hover:bg-accent hover:text-foreground; }
   .mail-icon-btn svg { @apply h-5 w-5 stroke-[1.8]; }
-  .unread-mail-icon { @apply relative inline-flex; }
-  .unread-mail-icon > i { @apply absolute -right-0.5 -top-0.5 h-1.5 w-1.5 rounded-full border border-background bg-current; }
   .mail-avatar-button { @apply ml-1 h-9 w-9 rounded-full border-2 border-mail-surface bg-primary text-xs font-bold text-primary-foreground shadow-sm hover:bg-primary/90; }
   .mail-layout { @apply flex h-dvh gap-0 pt-16; }
   .mail-sidebar { @apply w-64 shrink-0 overflow-hidden pb-4 pr-3 transition-[width]; }
@@ -375,7 +373,8 @@
   .reader { @apply bg-mobile-shell pb-20; }
   .reader-toolbar { @apply h-16 bg-mobile-shell px-3; }
   .reader-toolbar .pagination { @apply hidden; }
-  .reader-toolbar .toolbar-group:first-child { @apply w-full items-center justify-start gap-2; }
+  .reader-toolbar .toolbar-group:first-child { @apply w-full items-center justify-start gap-0; }
+  .reader-toolbar .toolbar-group:first-child > .mail-icon-btn { @apply h-9 w-9; }
   .reader-toolbar .mail-icon-btn svg { @apply h-6 w-6; }
   .reader-toolbar [aria-label="Back to messages"] { margin-right: auto; }
   .reader-toolbar .toolbar-divider, .reader-toolbar [aria-label="Report spam"], .reader-toolbar [aria-label="Snooze"], .reader-toolbar [aria-label="Add to tasks"], .reader-toolbar [aria-label="Move to"], .reader-toolbar [aria-label="Labels"] { display: none; }
@@ -396,6 +395,7 @@
   .mobile-encryption button { @apply h-7 justify-start p-0 text-sm text-mobile-control; }
   .message-body { @apply px-0 py-7 text-left text-sm leading-6; } .message-body p { @apply mb-5; } .attachments, .reply-actions { @apply ml-0; }
   .reply-actions { @apply fixed inset-x-4 bottom-22 z-20 flex items-center gap-3 bg-mobile-shell pb-2 pt-2; } .reply-actions > button:not(.mail-icon-btn) { @apply h-14 flex-1 rounded-full border-0 bg-mobile-control text-base text-mobile-control-foreground; } .reply-actions .mail-icon-btn { @apply h-14 w-14 rounded-full border-0 bg-mobile-control text-mobile-control-foreground; }
+  .reply-actions .mail-icon-btn svg { @apply h-6 w-6; }
   .compose-window { @apply inset-0 h-dvh w-full rounded-none; } .compose-window + * { @apply hidden; }
   .sender-popover { @apply w-[calc(100vw-1.5rem)] max-w-none rounded-md bg-popover p-4 text-popover-foreground; animation: none !important; opacity: 1 !important; transform: none !important; }
   .popover-grid { @apply grid-cols-[58px_minmax(0,1fr)] gap-x-2 gap-y-2 text-xs; } .popover-grid > span { @apply text-left; } .security-line { @apply items-start; }

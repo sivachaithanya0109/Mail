@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
-  Archive, ArchiveX, ArrowLeft, BadgeCheck, CalendarDays, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, CircleHelp,
-  Clock3, Copy, Download, ExternalLink, FileText, FolderInput, Grid3X3, Inbox, Info, Lightbulb, LockKeyhole, Mail, MailOpen,
-  Maximize2, Menu, MessageSquare, MessageSquarePlus, Minimize2, MoreVertical, Paperclip, PenLine,
-  Plus, Printer, RefreshCw, Reply, Search, Send, Settings, ShoppingBag, SlidersHorizontal,
-  Smile, Sparkles, Star, Tag, Trash2, Type, UserRound, X, Link2, Video,
+  Archive, ArchiveX, BadgeCheck, CalendarDays, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, CircleHelp,
+  Clock3, Copy, Download, ExternalLink, FileText, FolderInput, Grid3X3, Inbox, Info, Lightbulb, LockKeyhole, MailOpen,
+  Maximize2, Menu, MessageSquarePlus, Minimize2, Paperclip, PenLine,
+  Plus, Printer, RefreshCw, Search, Send, Settings, ShoppingBag, SlidersHorizontal,
+  Smile, Sparkles, Star, Tag, Trash2, Type, UserRound, X, Link2,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -31,13 +31,30 @@ function IconButton({ label, children, className, ...props }: { label: string; c
   return <Tooltip><TooltipTrigger asChild><Button variant="ghost" size="icon" className={cn("mail-icon-btn", className)} aria-label={label} {...props}>{children}</Button></TooltipTrigger><TooltipContent>{label}</TooltipContent></Tooltip>;
 }
 
-function ArchiveMailIcon() {
-  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 4.5h18v4H3z"/><path d="M5 8.5v11h14v-11"/><path d="M12 10.5v6"/><path d="m9.5 14 2.5 2.5 2.5-2.5"/></svg>;
+type GmailIconName = "arrow_back" | "archive" | "delete" | "mark_unread" | "more" | "star" | "mood" | "reply" | "forward" | "mail" | "chat" | "video";
+
+function GmailIcon({ name, filled = false }: { name: GmailIconName; filled?: boolean }) {
+  const common = { fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+
+  switch (name) {
+    case "arrow_back": return <svg viewBox="0 0 24 24" aria-hidden="true" {...common}><path d="M19 12H5m0 0 7-7m-7 7 7 7"/></svg>;
+    case "archive": return <svg viewBox="0 0 24 24" aria-hidden="true" {...common}><path d="M4 5h16v14H4zM4 8h16M12 10v6m-3-3 3 3 3-3"/></svg>;
+    case "delete": return <svg viewBox="0 0 24 24" aria-hidden="true" {...common}><path d="M4 6h16M9 6V4h6v2m3 0-.8 13.2a1 1 0 0 1-1 1H7.8a1 1 0 0 1-1-1L6 6m3.5 4v7m5-7v7"/></svg>;
+    case "mark_unread": return <svg viewBox="0 0 24 24" aria-hidden="true" {...common}><path d="M4 7h16v12H4zM4.5 8l7.5 5.5L19.5 8"/><circle cx="19" cy="5" r="2.5" fill="currentColor" stroke="var(--mobile-shell)"/></svg>;
+    case "more": return <svg viewBox="0 0 24 24" aria-hidden="true" {...common}><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>;
+    case "star": return <svg viewBox="0 0 24 24" aria-hidden="true" {...common} fill={filled ? "currentColor" : "none"}><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg>;
+    case "mood": return <svg viewBox="0 0 24 24" aria-hidden="true" {...common}><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c.8 1.2 2 2 3.5 2s2.7-.8 3.5-2M9 9.5h.01M15 9.5h.01"/></svg>;
+    case "reply": return <svg viewBox="0 0 24 24" aria-hidden="true" {...common}><path d="m10 8-6 4 6 4v-3c4.6 0 7.6 1.3 10 4-1-5-4-8-10-8V8Z"/></svg>;
+    case "forward": return <svg viewBox="0 0 24 24" aria-hidden="true" {...common}><path d="m14 8 6 4-6 4v-3c-4.6 0-7.6 1.3-10 4 1-5 4-8 10-8V8Z"/></svg>;
+    case "mail": return <svg viewBox="0 0 24 24" aria-hidden="true" {...common}><path d="M3 6h18v13H3zM3.5 7l8.5 6 8.5-6"/></svg>;
+    case "chat": return <svg viewBox="0 0 24 24" aria-hidden="true" {...common}><path d="M4 5h16v12H9l-5 3V5Z"/></svg>;
+    case "video": return <svg viewBox="0 0 24 24" aria-hidden="true" {...common}><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg>;
+  }
 }
 
-function UnreadMailIcon() {
-  return <span className="unread-mail-icon"><Mail/><i/></span>;
-}
+function ArchiveMailIcon() { return <GmailIcon name="archive"/>; }
+function UnreadMailIcon() { return <GmailIcon name="mark_unread"/>; }
+function GmailChevronDown({ className }: { className?: string }) { return <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>; }
 
 function Header({ query, setQuery, sidebarOpen, setSidebarOpen }: { query: string; setQuery: (v: string) => void; sidebarOpen: boolean; setSidebarOpen: (v: boolean) => void }) {
   return <header className="mail-header">
@@ -57,10 +74,10 @@ function Sidebar({ open, folder, setFolder, unread, onCompose }: { open: boolean
 
 function Toolbar({ selectedCount, allSelected, onSelectAll, onAction, reader, onBack, position, total, onNavigate }: { selectedCount: number; allSelected: boolean; onSelectAll: () => void; onAction: (action: string) => void; reader?: boolean; onBack?: () => void; position?: number; total: number; onNavigate?: (delta: number) => void }) {
   return <div className={cn("mail-toolbar", reader && "reader-toolbar")}><div className="toolbar-group">
-    {reader ? <IconButton label="Back to messages" onClick={onBack}><ArrowLeft /></IconButton> : <div className="select-control"><Checkbox checked={allSelected} onCheckedChange={onSelectAll} aria-label="Select all messages"/><ChevronDown /></div>}
+    {reader ? <IconButton label="Back to messages" onClick={onBack}><GmailIcon name="arrow_back"/></IconButton> : <div className="select-control"><Checkbox checked={allSelected} onCheckedChange={onSelectAll} aria-label="Select all messages"/><ChevronDown /></div>}
     {!reader && selectedCount === 0 && <IconButton label="Refresh" onClick={() => onAction("Inbox refreshed")}><RefreshCw /></IconButton>}
-    {(reader || selectedCount > 0) && <><IconButton label="Archive" onClick={() => onAction("archive")}><ArchiveMailIcon /></IconButton><IconButton label="Report spam" onClick={() => onAction("spam")}><ArchiveX /></IconButton><IconButton label="Delete" onClick={() => onAction("delete")}><Trash2 /></IconButton><span className="toolbar-divider"/><IconButton label="Mark unread" onClick={() => onAction("unread")}><UnreadMailIcon /></IconButton><IconButton label="Snooze" onClick={() => onAction("snooze")}><Clock3 /></IconButton>{reader && <><IconButton label="Add to tasks"><CheckCircle2 /></IconButton><span className="toolbar-divider"/><IconButton label="Move to"><FolderInput /></IconButton><IconButton label="Labels"><Tag /></IconButton></>}</>}
-    <IconButton label="More actions"><MoreVertical /></IconButton>{selectedCount > 0 && <span className="selected-count">{selectedCount} selected</span>}
+    {(reader || selectedCount > 0) && <><IconButton label="Archive" onClick={() => onAction("archive")}><ArchiveMailIcon /></IconButton><IconButton label="Report spam" onClick={() => onAction("spam")}><ArchiveX /></IconButton><IconButton label="Delete" onClick={() => onAction("delete")}><GmailIcon name="delete"/></IconButton><span className="toolbar-divider"/><IconButton label="Mark unread" onClick={() => onAction("unread")}><UnreadMailIcon /></IconButton><IconButton label="Snooze" onClick={() => onAction("snooze")}><Clock3 /></IconButton>{reader && <><IconButton label="Add to tasks"><CheckCircle2 /></IconButton><span className="toolbar-divider"/><IconButton label="Move to"><FolderInput /></IconButton><IconButton label="Labels"><Tag /></IconButton></>}</>}
+    <IconButton label="More actions"><GmailIcon name="more"/></IconButton>{selectedCount > 0 && <span className="selected-count">{selectedCount} selected</span>}
   </div><div className="toolbar-group pagination"><span>{reader && position ? `${position} of ` : "1–"}{total}</span><IconButton label="Newer" disabled={reader && position === 1} onClick={() => onNavigate?.(-1)}><ChevronLeft /></IconButton><IconButton label="Older" disabled={reader && position === total} onClick={() => onNavigate?.(1)}><ChevronRight /></IconButton></div></div>;
 }
 
@@ -78,13 +95,13 @@ function MobileCategoryBundles({ setActive }: { setActive: (v: EmailCategory) =>
 }
 
 function MobileBottomNav({ unread }: { unread: number }) {
-  return <nav className="mobile-bottom-nav" aria-label="App navigation"><Button variant="ghost" className="mobile-nav-active" aria-label="Mail"><span><Mail/></span><b>{unread > 99 ? "99+" : unread}</b></Button><Button variant="ghost" aria-label="Chat"><MessageSquare/></Button><Button variant="ghost" aria-label="Meet"><Video/></Button></nav>;
+  return <nav className="mobile-bottom-nav" aria-label="App navigation"><Button variant="ghost" className="mobile-nav-active" aria-label="Mail"><span><GmailIcon name="mail"/></span><b>{unread > 99 ? "99+" : unread}</b></Button><Button variant="ghost" aria-label="Chat"><GmailIcon name="chat"/></Button><Button variant="ghost" aria-label="Meet"><GmailIcon name="video"/></Button></nav>;
 }
 
 function EmailRow({ email, selected, onSelect, onStar, onOpen, onAction }: { email: EmailMessage; selected: boolean; onSelect: () => void; onStar: () => void; onOpen: () => void; onAction: (action: string) => void }) {
   return <div className={cn("email-row", email.unread && "email-unread", selected && "email-selected")} onClick={onOpen} tabIndex={0} role="button" onKeyDown={(e) => { if (e.key === "Enter") onOpen(); }}>
     <div className="row-controls" onClick={(e) => e.stopPropagation()}><span className="mobile-row-avatar">{email.avatar}</span><Checkbox checked={selected} onCheckedChange={onSelect} aria-label={`Select ${email.subject}`} /><IconButton label={email.starred ? "Unstar" : "Star"} onClick={onStar} className={cn("row-icon", email.starred && "starred")}><Star fill={email.starred ? "currentColor" : "none"}/></IconButton><span className={cn("importance", email.important && "important")} title="Important">›</span></div>
-    <span className="email-sender">{email.sender}</span><div className="email-summary"><span className="email-subject">{email.subject}</span><span className="email-preview"> — {email.preview}</span>{email.attachment && <Paperclip className="attachment-icon"/>}</div><span className="email-date">{email.date}</span><div className="row-quick-actions" onClick={(e) => e.stopPropagation()}><IconButton label="Archive" onClick={() => onAction("archive")}><Archive /></IconButton><IconButton label="Delete" onClick={() => onAction("delete")}><Trash2 /></IconButton><IconButton label={email.unread ? "Mark as read" : "Mark as unread"} onClick={() => onAction("unread")}><MailOpen /></IconButton><IconButton label="Snooze" onClick={() => onAction("snooze")}><Clock3 /></IconButton></div>
+    <span className="email-sender">{email.sender}</span><div className="email-summary"><span className="email-subject">{email.subject}</span><span className="email-preview"> — {email.preview}</span>{email.attachment && <Paperclip className="attachment-icon"/>}</div><span className="email-date">{email.date}</span><div className="row-quick-actions" onClick={(e) => e.stopPropagation()}><IconButton label="Archive" onClick={() => onAction("archive")}><Archive /></IconButton><IconButton label="Delete" onClick={() => onAction("delete")}><GmailIcon name="delete"/></IconButton><IconButton label={email.unread ? "Mark as read" : "Mark as unread"} onClick={() => onAction("unread")}><MailOpen /></IconButton><IconButton label="Snooze" onClick={() => onAction("snooze")}><Clock3 /></IconButton></div>
   </div>;
 }
 
@@ -105,7 +122,7 @@ function SenderDetails({ email, onSecurity }: { email: EmailMessage; onSecurity:
 function EmailReader({ email, onBack, onAction, onNavigate, position, total }: { email: EmailMessage; onBack: () => void; onAction: (action: string) => void; onNavigate: (delta: number) => void; position: number; total: number }) {
   const [securityOpen, setSecurityOpen] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
-  return <div className="reader"><Toolbar selectedCount={0} allSelected={false} onSelectAll={() => {}} onAction={onAction} reader onBack={onBack} position={position} total={total} onNavigate={onNavigate}/><article className="message"><div className="subject-line"><h1>{email.subject}</h1>{email.important && <span className="important-pill">Inbox</span>}<IconButton label="Star"><Star /></IconButton><IconButton label="Print all"><Printer /></IconButton><IconButton label="Open in new window"><ExternalLink /></IconButton></div><div className="sender-card"><div className="sender-block"><div className="sender-avatar">{email.avatar}</div><div className="sender-meta"><div className="sender-name-line"><b>{email.sender}</b><span className="mobile-message-time">{email.time}</span><span>&lt;{email.senderEmail}&gt;</span><BadgeCheck /></div><div className="desktop-sender-details"><SenderDetails email={email} onSecurity={() => setSecurityOpen(true)}/></div><Button variant="ghost" className="mobile-sender-details" onClick={() => setDetailsOpen(!detailsOpen)}>to me <ChevronDown className={detailsOpen ? "details-open" : ""}/></Button></div><Button variant="link" className="unsubscribe">Unsubscribe</Button><div className="message-time"><span>{email.time} ({email.date === "Sep 9" ? "2 hours ago" : email.date})</span><IconButton label={email.starred ? "Unstar" : "Star"}><Star fill={email.starred ? "currentColor" : "none"}/></IconButton><IconButton label="Add reaction"><Smile /></IconButton><IconButton label="Reply"><Reply /></IconButton><IconButton label="More"><MoreVertical /></IconButton></div></div>{detailsOpen && <div className="mobile-recipient-panel"><div><span>From</span><b>{email.sender} · {email.senderEmail}</b><span>To</span><b>{email.recipient}</b><span>Date</span><b>{email.fullDate}</b></div><div className="mobile-encryption"><LockKeyhole/><span>Standard encryption (TLS).<Button variant="link" onClick={() => setSecurityOpen(true)}>See security details</Button></span></div></div>}<div className="message-body">{email.body.map((p, i) => <p key={i}>{p}</p>)}</div>{email.attachment && <div className="attachments"><b>1 attachment</b><Button variant="outline" className="attachment-card"><FileText/><span>{email.attachment}<small>Demo file</small></span></Button></div>}</div><div className="reply-actions"><Button variant="outline"><Reply/> Reply</Button><Button variant="outline"><Send/> Forward</Button><IconButton label="Add reaction"><Smile /></IconButton></div></article><SecurityModal open={securityOpen} setOpen={setSecurityOpen} email={email}/></div>;
+  return <div className="reader"><Toolbar selectedCount={0} allSelected={false} onSelectAll={() => {}} onAction={onAction} reader onBack={onBack} position={position} total={total} onNavigate={onNavigate}/><article className="message"><div className="subject-line"><h1>{email.subject}</h1>{email.important && <span className="important-pill">Inbox</span>}<IconButton label="Star"><GmailIcon name="star"/></IconButton><IconButton label="Print all"><Printer /></IconButton><IconButton label="Open in new window"><ExternalLink /></IconButton></div><div className="sender-card"><div className="sender-block"><div className="sender-avatar">{email.avatar}</div><div className="sender-meta"><div className="sender-name-line"><b>{email.sender}</b><span className="mobile-message-time">{email.time}</span><span>&lt;{email.senderEmail}&gt;</span><BadgeCheck /></div><div className="desktop-sender-details"><SenderDetails email={email} onSecurity={() => setSecurityOpen(true)}/></div><Button variant="ghost" className="mobile-sender-details" onClick={() => setDetailsOpen(!detailsOpen)}>to me <GmailChevronDown className={detailsOpen ? "details-open" : ""}/></Button></div><Button variant="link" className="unsubscribe">Unsubscribe</Button><div className="message-time"><span>{email.time} ({email.date === "Sep 9" ? "2 hours ago" : email.date})</span><IconButton label={email.starred ? "Unstar" : "Star"}><GmailIcon name="star" filled={email.starred}/></IconButton><IconButton label="Add reaction"><GmailIcon name="mood"/></IconButton><IconButton label="Reply"><GmailIcon name="reply"/></IconButton><IconButton label="More"><GmailIcon name="more"/></IconButton></div></div>{detailsOpen && <div className="mobile-recipient-panel"><div><span>From</span><b>{email.sender} · {email.senderEmail}</b><span>To</span><b>{email.recipient}</b><span>Date</span><b>{email.fullDate}</b></div><div className="mobile-encryption"><LockKeyhole/><span>Standard encryption (TLS).<Button variant="link" onClick={() => setSecurityOpen(true)}>See security details</Button></span></div></div>}<div className="message-body">{email.body.map((p, i) => <p key={i}>{p}</p>)}</div>{email.attachment && <div className="attachments"><b>1 attachment</b><Button variant="outline" className="attachment-card"><FileText/><span>{email.attachment}<small>Demo file</small></span></Button></div>}</div><div className="reply-actions"><Button variant="outline"><GmailIcon name="reply"/> Reply</Button><Button variant="outline"><GmailIcon name="forward"/> Forward</Button><IconButton label="Add reaction"><GmailIcon name="mood"/></IconButton></div></article><SecurityModal open={securityOpen} setOpen={setSecurityOpen} email={email}/></div>;
 }
 
 function AppRail() {
